@@ -1,0 +1,39 @@
+<!doctype html>
+<html>
+<head>
+	<meta charset="utf-8"/>
+	<title>wasm</title>
+</head>
+<body>
+
+
+<script>
+
+	async function  loadwasm(){
+
+		let wasm= 	await fetch("./temp/assembly/index.wasm?rand="+Math.random()*10000)
+
+		let arraybuffer = await wasm.arrayBuffer();
+
+		let instance= await WebAssembly.instantiate(arraybuffer,window)
+		let expor=  instance.instance.exports
+	//	console.log(expor.init(21,31));
+		let g  = expor.add(13,2)
+		console.log(expor.test())
+	}
+
+
+/* 	loadwasm().then(x => {
+		return x.arrayBuffer()
+	}).then(x => {
+		return WebAssembly.instantiate(x)
+	}).then(x => {
+		console.log(x.instance.exports.b)
+	})
+ */
+	loadwasm();
+</script>
+
+
+</body>
+</html>
