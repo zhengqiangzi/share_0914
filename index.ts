@@ -9,8 +9,19 @@ declare namespace window {
     
     export function alert(v: number): void;
     export function prompt(v: string,s:f64):void;
-    export function console(v:string):void
+
 }
+
+
+
+
+declare namespace Math{
+
+    export function max(a:number,b:number):number
+}
+
+
+
 export function init(w_: number, h_: number): number {
     var  w = w_;
     var h = h_;
@@ -21,14 +32,14 @@ export function add(x:number,y:number):number{
     for(var i:number=0;i<len;i++){
         j=j+i
     }
-    var kk:f64=123.36
+    
   //  const aaa="444"
     //window.prompt(aaa,j)
    // window.console("aaaaaa")
     return j
 }
 
-export function test():string{
+export function test():f64{
 
-    return "_str"
+    return Math.max(123,1234)
 }

@@ -9,17 +9,42 @@
 
 <script>
 
+
+	function Uint8ArrayToString(fileData) {
+		console.log(fileData.length)
+		var dataString = "";
+		for (var i = 0; i < fileData.length; i++) {
+			dataString += String.fromCharCode(fileData[i]);
+		}
+
+		return dataString
+	}
+
+
 	async function  loadwasm(){
 
 		let wasm= 	await fetch("./temp/assembly/index.wasm?rand="+Math.random()*10000)
 
 		let arraybuffer = await wasm.arrayBuffer();
 
-		let instance= await WebAssembly.instantiate(arraybuffer,window)
+		/* let instance= await WebAssembly.instantiate(arraybuffer,window)
 		let expor=  instance.instance.exports
 	//	console.log(expor.init(21,31));
 		let g  = expor.add(13,2)
-		console.log(expor.test())
+		console.log(expor.test()) */
+
+		//console.log(arraybuffer)
+		const module = new WebAssembly.Module(arraybuffer);
+		const memory = new WebAssembly.Memory({ initial: 2 }); // Size is in pages.
+		const instance = new WebAssembly.Instance(module, { imports: { memory: memory},Math:Math,String:String  });
+		const arrayBuffer = memory.buffer;
+		const buffer = new Uint8Array(arrayBuffer);
+
+		//Uint8ArrayToString(buffer)
+
+		var pp = instance.exports.test()
+		console.log(pp)
+
 	}
 
 
